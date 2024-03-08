@@ -36,10 +36,15 @@ def welcome():
     """List all available api routes."""
     return(
         f"Available Routes:<br/>"
+        #precipitation analysis
         f"Precipitation: /api/v1.0/precipitation<br/>"
+        #list of stations
         f"Stations: /api/v1.0/stations<br/>"
-        f"Temperatures: /api/v1.0/tobs<br/>"
-        f"Temperatures from start: /api/v1.0/start<br/>"
+        #tobs for previous year
+        f"Temperatures for previous year: /api/v1.0/tobs<br/>"
+        #tobs after start date
+        f"Temperatures from start date: /api/v1.0/start<br/>"
+        #tobs between start and end date
         f"Temperatures from between time range: /api/v1.0/start/end<br/>"
     )
 
@@ -88,7 +93,7 @@ def tobs():
     session = Session(engine)
     """Return all temperature observations"""
     #query
-    
+    #taking the same method from the climate analysis jupyter notebook to find previous year of data
     # Starting from the most recent data point in the database. 
     recent = session.query(Measurement.date).order_by(Measurement.date.desc()).first()
     last_date = dt.datetime.strptime(recent[0], '%Y-%m-%d')
